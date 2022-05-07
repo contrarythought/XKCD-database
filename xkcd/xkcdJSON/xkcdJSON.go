@@ -57,3 +57,18 @@ func BuildXKCDDatabase() (map[int]Comic, error) {
 	}
 	return database, nil
 }
+
+func GetNewComic() (*Comic, error) {
+	query, err := http.Get(HOST + URL_END)
+	if err != nil {
+		return nil, err
+	}
+	defer query.Body.Close()
+
+	var comic Comic
+	if err := json.NewDecoder(query.Body).Decode(&comic); err != nil {
+		return nil, err
+	}
+
+	return &comic, nil
+}
