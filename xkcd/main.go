@@ -30,6 +30,7 @@ func main() {
 	}
 
 	var database map[int]xkcdJSON.Comic
+	fastLookup := make(map[string]string)
 	if !containsDB {
 		file, err := os.Create(DB_NAME)
 		if err != nil {
@@ -49,9 +50,19 @@ func main() {
 			//fmt.Println(database[i].Title)
 			file.WriteString(database[i].Title + "\n")
 			file.WriteString(database[i].Img + "\n")
+			fastLookup[database[i].Title] = database[i].Img
 		}
+
+		// grab user input
+
 	} else {
-		// TODO - take input from user to grab a comic
+		// grab most recent comic
+		comic, err := xkcdJSON.GetNewComic()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// obtain user input
 	}
 
 }
